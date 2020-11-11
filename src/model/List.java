@@ -6,7 +6,7 @@ package model;
 public class List<ContentType> {
 
     //TODO 01: Fertigstellen der Liste
-  /* --------- Anfang der privaten inneren Klasse -------------- */
+    /* --------- Anfang der privaten inneren Klasse -------------- */
 
     private class ListNode {
 
@@ -62,7 +62,7 @@ public class List<ContentType> {
 
     }
 
-  /* ----------- Ende der privaten inneren Klasse -------------- */
+    /* ----------- Ende der privaten inneren Klasse -------------- */
 
     // erstes Element der Liste
     ListNode first;
@@ -90,6 +90,9 @@ public class List<ContentType> {
      */
     public boolean isEmpty() {
         //TODO 01a: Die Liste ist leer, wenn es kein erstes Element gibt.
+        if (first == null) {
+            return true;
+        }
         return false;
     }
 
@@ -101,7 +104,10 @@ public class List<ContentType> {
      */
     public boolean hasAccess() {
         //TODO 01b: Es gibt keinen Zugriff, wenn current auf kein Element verweist.
-        return false;
+        if (current == null) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -113,6 +119,9 @@ public class List<ContentType> {
      */
     public void next() {
         //TODO 01c: Wechsel auf die nächste Node
+        if (!isEmpty() && current != null && current != last){
+
+        }
     }
 
     /**
@@ -121,6 +130,11 @@ public class List<ContentType> {
      */
     public void toFirst() {
         //TODO 01d: Sprung zur ersten Node
+        if (!isEmpty()){
+            current = first;
+        }else{
+            return;
+        }
     }
 
     /**
@@ -129,6 +143,11 @@ public class List<ContentType> {
      */
     public void toLast() {
         //TODO 01e: Sprung auf die letzte Node
+        if (!isEmpty()){
+            current = last;
+        }else{
+            return;
+        }
     }
 
     /**
@@ -137,7 +156,7 @@ public class List<ContentType> {
      * die Anfrage den Wert null zurueck.
      *
      * @return das aktuelle Objekt (vom Typ ContentType) oder null, wenn es
-     *         kein aktuelles Objekt gibt
+     * kein aktuelles Objekt gibt
      */
     public ContentType getContent() {
         return null;
@@ -148,8 +167,7 @@ public class List<ContentType> {
      * ungleich null ist, wird das aktuelle Objekt durch pContent ersetzt. Sonst
      * geschieht nichts.
      *
-     * @param pContent
-     *            das zu schreibende Objekt vom Typ ContentType
+     * @param pContent das zu schreibende Objekt vom Typ ContentType
      */
     public void setContent(ContentType pContent) {
         // Nichts tun, wenn es keinen Inhalt oder kein aktuelles Element gibt.
@@ -165,8 +183,7 @@ public class List<ContentType> {
      * Falls es kein aktuelles Objekt gibt (hasAccess() == false) und die Liste
      * nicht leer ist oder pContent gleich null ist, geschieht nichts.
      *
-     * @param pContent
-     *            das einzufuegende Objekt vom Typ ContentType
+     * @param pContent das einzufuegende Objekt vom Typ ContentType
      */
     public void insert(ContentType pContent) {
         //TODO 01g: Inhaltsobjekt einfügen
@@ -179,8 +196,7 @@ public class List<ContentType> {
      * Wenn die Liste leer ist, wird das Objekt pContent in die Liste eingefuegt
      * und es gibt weiterhin kein aktuelles Objekt (hasAccess() == false).
      *
-     * @param pContent
-     *            das anzuhaengende Objekt vom Typ ContentType
+     * @param pContent das anzuhaengende Objekt vom Typ ContentType
      */
     public void append(ContentType pContent) {
         //TODO 01h: Inhaltsobjekt anhängen
@@ -193,8 +209,7 @@ public class List<ContentType> {
      * Anschliessend wird pList eine leere Liste. Das aktuelle Objekt bleibt
      * unveraendert. Insbesondere bleibt hasAccess identisch.
      *
-     * @param pList
-     *            die am Ende anzuhaengende Liste vom Typ List<ContentType>
+     * @param pList die am Ende anzuhaengende Liste vom Typ List<ContentType>
      */
     public void concat(List<ContentType> pList) {
         //TODO 01i: eine Liste an eine andere anhängen
@@ -219,11 +234,10 @@ public class List<ContentType> {
      * == null, pNode nicht in der Liste oder pNode der erste Knoten der Liste,
      * wird null zurueckgegeben.
      *
-     * @param pNode
-     *         der Knoten, dessen Vorgaenger zurueckgegeben werden soll
+     * @param pNode der Knoten, dessen Vorgaenger zurueckgegeben werden soll
      * @return der Vorgaenger des Knotens pNode oder null, falls die Liste leer ist,
-     *         pNode == null ist, pNode nicht in der Liste ist oder pNode der erste Knoten
-     *         der Liste ist
+     * pNode == null ist, pNode nicht in der Liste ist oder pNode der erste Knoten
+     * der Liste ist
      */
     private ListNode getPrevious(ListNode pNode) {
         //TODO 01k: Vorgänger-Node der aktuellen Node liefern.
