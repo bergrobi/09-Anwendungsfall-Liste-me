@@ -119,9 +119,14 @@ public class List<ContentType> {
      */
     public void next() {
         //TODO 01c: Wechsel auf die nächste Node
-        if (!isEmpty() && current != null && current != last){
+        if (!isEmpty() && current != null){
+            if (current != last){
 
+            }else{
+                current = null;
+            }
         }
+        return;
     }
 
     /**
