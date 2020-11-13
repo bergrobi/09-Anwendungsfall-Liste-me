@@ -119,14 +119,9 @@ public class List<ContentType> {
      */
     public void next() {
         //TODO 01c: Wechsel auf die nächste Node
-        if (!isEmpty() && current != null){
-            if (current != last){
-
-            }else{
-                current = null;
-            }
+        if (hasAccess()) {
+            current = current.getNextNode();
         }
-        return;
     }
 
     /**
@@ -135,10 +130,8 @@ public class List<ContentType> {
      */
     public void toFirst() {
         //TODO 01d: Sprung zur ersten Node
-        if (!isEmpty()){
+        if (!isEmpty()) {
             current = first;
-        }else{
-            return;
         }
     }
 
@@ -148,105 +141,168 @@ public class List<ContentType> {
      */
     public void toLast() {
         //TODO 01e: Sprung auf die letzte Node
-        if (!isEmpty()){
+        if (!isEmpty()) {
             current = last;
-        }else{
-            return;
         }
-    }
 
-    /**
-     * Falls es ein aktuelles Objekt gibt (hasAccess() == true), wird das
-     * aktuelle Objekt zurueckgegeben, andernfalls (hasAccess() == false) gibt
-     * die Anfrage den Wert null zurueck.
-     *
-     * @return das aktuelle Objekt (vom Typ ContentType) oder null, wenn es
-     * kein aktuelles Objekt gibt
-     */
-    public ContentType getContent() {
-        return null;
-    }
+        /**
+         * Falls es ein aktuelles Objekt gibt (hasAccess() == true), wird das
+         * aktuelle Objekt zurueckgegeben, andernfalls (hasAccess() == false) gibt
+         * die Anfrage den Wert null zurueck.
+         *
+         * @return das aktuelle Objekt (vom Typ ContentType) oder null, wenn es
+         * kein aktuelles Objekt gibt
+         */
+        public ContentType getContent () {
+            if (hasAccess()) {
+                return current.getContentObject();
+            }
+            return null;
+        }
 
-    /**
-     * Falls es ein aktuelles Objekt gibt (hasAccess() == true) und pContent
-     * ungleich null ist, wird das aktuelle Objekt durch pContent ersetzt. Sonst
-     * geschieht nichts.
-     *
-     * @param pContent das zu schreibende Objekt vom Typ ContentType
-     */
-    public void setContent(ContentType pContent) {
-        // Nichts tun, wenn es keinen Inhalt oder kein aktuelles Element gibt.
-        //TODO 01f: Inhaltsobjekt ersetzen
-    }
+        /**
+         * Falls es ein aktuelles Objekt gibt (hasAccess() == true) und pContent
+         * ungleich null ist, wird das aktuelle Objekt durch pContent ersetzt. Sonst
+         * geschieht nichts.
+         *
+         * @param pContent das zu schreibende Objekt vom Typ ContentType
+         */
+        public void setContent (ContentType pContent){
+            // Nichts tun, wenn es keinen Inhalt oder kein aktuelles Element gibt.
+            //TODO 01f: Inhaltsobjekt ersetzen
+            if (hasAccess() && pContent != null) {
+                current = pContent;
+            }
+        }
 
-    /**
-     * Falls es ein aktuelles Objekt gibt (hasAccess() == true), wird ein neues
-     * Objekt vor dem aktuellen Objekt in die Liste eingefuegt. Das aktuelle
-     * Objekt bleibt unveraendert. <br />
-     * Wenn die Liste leer ist, wird pContent in die Liste eingefuegt und es
-     * gibt weiterhin kein aktuelles Objekt (hasAccess() == false). <br />
-     * Falls es kein aktuelles Objekt gibt (hasAccess() == false) und die Liste
-     * nicht leer ist oder pContent gleich null ist, geschieht nichts.
-     *
-     * @param pContent das einzufuegende Objekt vom Typ ContentType
-     */
-    public void insert(ContentType pContent) {
-        //TODO 01g: Inhaltsobjekt einfügen
-    }
+        /**
+         * Falls es ein aktuelles Objekt gibt (hasAccess() == true), wird ein neues
+         * Objekt vor dem aktuellen Objekt in die Liste eingefuegt. Das aktuelle
+         * Objekt bleibt unveraendert. <br />
+         * Wenn die Liste leer ist, wird pContent in die Liste eingefuegt und es
+         * gibt weiterhin kein aktuelles Objekt (hasAccess() == false). <br />
+         * Falls es kein aktuelles Objekt gibt (hasAccess() == false) und die Liste
+         * nicht leer ist oder pContent gleich null ist, geschieht nichts.
+         *
+         * @param pContent das einzufuegende Objekt vom Typ ContentType
+         */
+        public void insert (ContentType pContent){
+            //TODO 01g: Inhaltsobjekt einfügen
+            if (pContent != null) {
+                ListNode tmp = new ListNode(pContent);
+                if (hasAccess()) {
+                    tmp.setNextNode(current);
+                    if (current == first) {
+                        first = tmp;
+                    } else {
+                        getPrevious(current).setNextNode(tmp);
+                    }
+                } else {
+                    first = tmp;
+                    last = tmp;
+                }
+            }
+        }
 
-    /**
-     * Falls pContent gleich null ist, geschieht nichts.<br />
-     * Ansonsten wird ein neues Objekt pContent am Ende der Liste eingefuegt.
-     * Das aktuelle Objekt bleibt unveraendert. <br />
-     * Wenn die Liste leer ist, wird das Objekt pContent in die Liste eingefuegt
-     * und es gibt weiterhin kein aktuelles Objekt (hasAccess() == false).
-     *
-     * @param pContent das anzuhaengende Objekt vom Typ ContentType
-     */
-    public void append(ContentType pContent) {
-        //TODO 01h: Inhaltsobjekt anhängen
-    }
+        /**
+         * Falls pContent gleich null ist, geschieht nichts.<br />
+         * Ansonsten wird ein neues Objekt pContent am Ende der Liste eingefuegt.
+         * Das aktuelle Objekt bleibt unveraendert. <br />
+         * Wenn die Liste leer ist, wird das Objekt pContent in die Liste eingefuegt
+         * und es gibt weiterhin kein aktuelles Objekt (hasAccess() == false).
+         *
+         * @param pContent das anzuhaengende Objekt vom Typ ContentType
+         */
+        public void append (ContentType pContent){
+            //TODO 01h: Inhaltsobjekt anhängen
+            if (pContent != null) {
+                ListNode tmp = new ListNode(pContent);
+                if (!isEmpty()) {
+                    last.setNextNode(tmp);
+                    last = tmp;
+                } else {
+                    first = tmp;
+                    last = tmp;
+                }
+            }
+        }
 
-    /**
-     * Falls es sich bei der Liste und pList um dasselbe Objekt handelt,
-     * pList null oder eine leere Liste ist, geschieht nichts.<br />
-     * Ansonsten wird die Liste pList an die aktuelle Liste angehaengt.
-     * Anschliessend wird pList eine leere Liste. Das aktuelle Objekt bleibt
-     * unveraendert. Insbesondere bleibt hasAccess identisch.
-     *
-     * @param pList die am Ende anzuhaengende Liste vom Typ List<ContentType>
-     */
-    public void concat(List<ContentType> pList) {
-        //TODO 01i: eine Liste an eine andere anhängen
-    }
+        /**
+         * Falls es sich bei der Liste und pList um dasselbe Objekt handelt,
+         * pList null oder eine leere Liste ist, geschieht nichts.<br />
+         * Ansonsten wird die Liste pList an die aktuelle Liste angehaengt.
+         * Anschliessend wird pList eine leere Liste. Das aktuelle Objekt bleibt
+         * unveraendert. Insbesondere bleibt hasAccess identisch.
+         *
+         * @param pList die am Ende anzuhaengende Liste vom Typ List<ContentType>
+         */
+        public void concat (List < ContentType > pList) {
+            //TODO 01i: eine Liste an eine andere anhängen
+            if (pList != this && pList != null && !pList.isEmpty()) {
+                if (!this.isEmpty()) {
+                    last.setNextNode(pList.first);
+                } else {
+                    last = pList.last;
 
-    /**
-     * Wenn die Liste leer ist oder es kein aktuelles Objekt gibt (hasAccess()
-     * == false), geschieht nichts.<br />
-     * Falls es ein aktuelles Objekt gibt (hasAccess() == true), wird das
-     * aktuelle Objekt geloescht und das Objekt hinter dem geloeschten Objekt
-     * wird zum aktuellen Objekt. <br />
-     * Wird das Objekt, das am Ende der Liste steht, geloescht, gibt es kein
-     * aktuelles Objekt mehr.
-     */
-    public void remove() {
-        // Nichts tun, wenn es kein aktuelles Element gibt oder die Liste leer ist.
-        //TODO 01j: eine Node samt Inhaltsobjekt entfernen
-    }
+                    pList.first = null;
+                    pList.current = null;
+                    pList.last = null;
+                }
+            }
+        }
 
-    /**
-     * Liefert den Vorgaengerknoten des Knotens pNode. Ist die Liste leer, pNode
-     * == null, pNode nicht in der Liste oder pNode der erste Knoten der Liste,
-     * wird null zurueckgegeben.
-     *
-     * @param pNode der Knoten, dessen Vorgaenger zurueckgegeben werden soll
-     * @return der Vorgaenger des Knotens pNode oder null, falls die Liste leer ist,
-     * pNode == null ist, pNode nicht in der Liste ist oder pNode der erste Knoten
-     * der Liste ist
-     */
-    private ListNode getPrevious(ListNode pNode) {
-        //TODO 01k: Vorgänger-Node der aktuellen Node liefern.
-        return null;
-    }
+        /**
+         * Wenn die Liste leer ist oder es kein aktuelles Objekt gibt (hasAccess()
+         * == false), geschieht nichts.<br />
+         * Falls es ein aktuelles Objekt gibt (hasAccess() == true), wird das
+         * aktuelle Objekt geloescht und das Objekt hinter dem geloeschten Objekt
+         * wird zum aktuellen Objekt. <br />
+         * Wird das Objekt, das am Ende der Liste steht, geloescht, gibt es kein
+         * aktuelles Objekt mehr.
+         */
+        public void remove () {
+            // Nichts tun, wenn es kein aktuelles Element gibt oder die Liste leer ist.
+            //TODO 01j: eine Node samt Inhaltsobjekt entfernen
+            if (hasAccess()) {
+                if (current != first && current != last) {
+                    getPrevious(current).setNextNode(current.getNextNode())
+                    current = current.getNextNode();
+                }else if(current == first && current != last){
+                    first = first.getNextNode();
+                    current = current.getNextNode();
+                }else if (current != first && current == last){
+                    last = getPrevious(last);
+                    last.setNextNode(null);
+                    current = null;
+                }else if(first == last){
+                    first = null;
+                    current = null;
+                    last = null;
+                }
+            }
+        }
 
-}
+        /**
+         * Liefert den Vorgaengerknoten des Knotens pNode. Ist die Liste leer, pNode
+         * == null, pNode nicht in der Liste oder pNode der erste Knoten der Liste,
+         * wird null zurueckgegeben.
+         *
+         * @param pNode der Knoten, dessen Vorgaenger zurueckgegeben werden soll
+         * @return der Vorgaenger des Knotens pNode oder null, falls die Liste leer ist,
+         * pNode == null ist, pNode nicht in der Liste ist oder pNode der erste Knoten
+         * der Liste ist
+         */
+        private ListNode getPrevious (ListNode pNode){
+            //TODO 01k: Vorgänger-Node der aktuellen Node liefern.
+            if (!isEmpty() && pNode != null && pNode != first){
+                ListNode temp = first;
+
+                while (temp != null && temp.getNextNode() != pNode){
+                    temp = temp.getNextNode();
+                }
+                return temp;
+            }
+            return null;
+        }
+
+    }
