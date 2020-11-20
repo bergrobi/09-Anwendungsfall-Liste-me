@@ -144,7 +144,7 @@ public class List<ContentType> {
         if (!isEmpty()) {
             current = last;
         }
-
+    }
         /**
          * Falls es ein aktuelles Objekt gibt (hasAccess() == true), wird das
          * aktuelle Objekt zurueckgegeben, andernfalls (hasAccess() == false) gibt
@@ -171,7 +171,7 @@ public class List<ContentType> {
             // Nichts tun, wenn es keinen Inhalt oder kein aktuelles Element gibt.
             //TODO 01f: Inhaltsobjekt ersetzen
             if (hasAccess() && pContent != null) {
-                current = pContent;
+                current.setContentObject(pContent);
             }
         }
 
@@ -265,7 +265,7 @@ public class List<ContentType> {
             //TODO 01j: eine Node samt Inhaltsobjekt entfernen
             if (hasAccess()) {
                 if (current != first && current != last) {
-                    getPrevious(current).setNextNode(current.getNextNode())
+                    getPrevious(current).setNextNode(current.getNextNode());
                     current = current.getNextNode();
                 }else if(current == first && current != last){
                     first = first.getNextNode();
