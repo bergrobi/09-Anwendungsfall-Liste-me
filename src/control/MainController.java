@@ -46,6 +46,13 @@ public class MainController {
      */
     public boolean appendFromTo(int from, int to){
         //TODO 04: Die Objekte einer Liste an eine andere anhängen und dabei die erste Liste leeren.
+        if (0 <= from && from < allShelves.length && 0 <= to && to < allShelves.length && !allShelves[from].i) {
+            List<File> list1 = allShelves[from];
+            List<File> list2 = allShelves[to];
+
+            list2.concat(list1);
+            return true;
+        }
         return false;
     }
 
@@ -58,6 +65,7 @@ public class MainController {
      */
     public boolean appendANewFile(int index, String name, String phoneNumber){
         //TODO 02: Hinzufügen einer neuen Akte am Ende der Liste.
+
         return false;
     }
 
