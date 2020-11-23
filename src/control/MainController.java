@@ -25,7 +25,19 @@ public class MainController {
     public String[] showShelfContent(int index){
         List<File> list = allShelves[index];
         //TODO 03: Ausgabe der Inhalte
-        return new String[]{"Platzhalter00", "Platzhalter01", "Platzhalter02"};
+        int size = 0;
+        list.toFirst();
+        while (list.hasAccess()){
+            size++;
+            list.next();
+        }
+        String[] output = new  String[size];
+        list.toFirst();
+        for (int i = 0; i < output.length; i++){
+            output[i] = list.getContent().getName();
+            list.next();
+        }
+        return output;
     }
 
     /**
@@ -35,6 +47,7 @@ public class MainController {
      */
     public boolean sort(int index){
         //TODO 07: Sortieren einer Liste.
+
         return false;
     }
 
@@ -88,7 +101,18 @@ public class MainController {
      */
     public int[] search(String name){
         //TODO 05: Suchen in einer Liste.
-        return new int[]{-1,-1};
+        int[] output = new int[]{-1,-1};
+        for (int i = 0; i < allShelves.length; i++){
+            allShelves[i].toFirst();
+            for (int j = 0; allShelves[i].hasAccess(); j++){
+                if (allShelves[i].getContent().getName().equals(name)){
+                    output[0] = i;
+                    output[1] = j;
+                }
+                allShelves[i].next();
+            }
+        }
+        return output;
     }
 
     /**
@@ -99,6 +123,25 @@ public class MainController {
      */
     public String[] remove(int shelfIndex, int fileIndex){
         //TODO 06: Entfernen aus einer Liste.
+        String[] out = new String[2];
+        if (0 <=shelfIndex && shelfIndex < allShelves.length){
+            int counter = 0;
+            allShelves[shelfIndex].toFirst();
+            while(allShelves[shelfIndex].hasAccess()){
+                if (counter == fileIndex){
+                    File file = allShelves[shelfIndex].getContent();
+                    out[0] = file.getName();
+                    out[1] = file.getPhoneNumber();
+                    allShelves[shelfIndex].remove();
+                    return out;
+                }
+                counter++;
+                allShelves[shelfIndex].next();
+            }
+            out[0] = "Regalindex:" + shelfIndex + " vohanden";
+            out[1] = "Aktenindex:" + fileIndex + " nicht vorhanden";
+            return out;
+        }
         return new String[]{"Nicht vorhanden","Nicht vorhanden"};
     }
 
