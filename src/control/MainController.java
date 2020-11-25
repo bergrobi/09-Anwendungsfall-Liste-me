@@ -47,6 +47,34 @@ public class MainController {
      */
     public boolean sort(int index){
         //TODO 07: Sortieren einer Liste.
+        List<File> list = allShelves[index];
+        list.toFirst();
+        if (list.hasAccess()){
+            List<File> helpList=new List<>();
+            helpList.append(list.getContent());
+            list.remove();
+            helpList.toFirst();
+            while (list.hasAccess()){
+                if (list.getContent().getName().compareToIgnoreCase(helpList.getContent().getName())<0){
+                    helpList.insert(list.getContent());
+                    list.remove();
+                    helpList.toFirst();
+                }else {
+                    helpList.next();
+                }
+                if (helpList.hasAccess()){
+                    helpList.append(list.getContent());
+                    list.remove();
+                    helpList.toFirst();
+                }
+            }
+            helpList.toFirst();
+            while (helpList.hasAccess()){
+                list.append(helpList.getContent());
+                helpList.remove();
+            }
+            return true;
+        }
 
         return false;
     }
