@@ -120,7 +120,7 @@ public class MainController {
      */
     public boolean insertANewFile(int index, String name, String phoneNumber){
         //TODO 08: Einfügen einer neuen Akte an die richtige Stelle innerhalb der Liste.
-        //meine drei Ansätze: 1. Einfügen und neu sortieren 2. Erst Sortieren und dann an die richtige Stelle einfügen 3.überprüfen, ob sortiert wurde und dan richtg einfügen
+        //meine drei Ansätze: 1. Einfügen und neu sortieren 2. Erst Sortieren und dann an die richtige Stelle einfügen 3.überprüfen, ob sortiert wurde und dann richtg einfügen -> entschieden für Nummer 2...
         return false;
     }
 
