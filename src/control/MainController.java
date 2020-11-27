@@ -73,7 +73,7 @@ public class MainController {
                 list.append(helpList.getContent());
                 helpList.remove();
             }*/
-            allShelves[index]=helpList;
+            allShelves[index]= concat (helpList);
             return true;
         }
 
@@ -121,6 +121,24 @@ public class MainController {
     public boolean insertANewFile(int index, String name, String phoneNumber){
         //TODO 08: Einfügen einer neuen Akte an die richtige Stelle innerhalb der Liste.
         //meine drei Ansätze: 1. Einfügen und neu sortieren 2. Erst Sortieren und dann an die richtige Stelle einfügen 3.überprüfen, ob sortiert wurde und dann richtg einfügen -> entschieden für Nummer 2...
+        //Quick and Dirty...(nicht mehr die untere...)
+
+        if (0<=index && index < allShelves.length && name != null && !name.equals("")&& phoneNumber != null) {
+            File file = new File(name, phoneNumber);
+            allShelves[index].toFirst();
+            while (allShelves[index].hasAccess()) {
+                //falls die Akte vor dem aktuellen Objekt eingefügt werden muss...
+                if (file.getName().compareToIgnoreCase(allShelves[index].getContent().getName()) < 0) {
+                    //dann...
+                    allShelves[index].insert(file);
+                    return true;
+                }
+                //...sonst geh in der Liste weiter!
+                allShelves[index].next();
+            }
+            allShelves[index].append(file);
+            return true;
+        }
         return false;
     }
 
